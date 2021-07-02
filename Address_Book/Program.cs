@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Address_Book
 {
@@ -44,16 +45,19 @@ namespace Address_Book
             ContactPerson obj = new ContactPerson();
             obj.Display(ContactArray, contact);
         }
+        //Function call To modify
         public void Modify()
         {
+            //User enters field to Modify
             int i=0;
-            Console.WriteLine("---To Modify---\nEnter first name of user");
+            Console.WriteLine("-------To Modify-------\nEnter first name of user that needs modification");
             string name = Console.ReadLine();
-            while( this.ContactArray[i].firstName!= name)
+            //Traverse till the desired index
+            while( ContactArray[i].firstName!= name)
             {
                 i++;
             }
-            Console.WriteLine("Enter field to be modified 1.firstName 2.lastName 3.Address 4.city 5.state 6.zip 7.phoneNumber 8.email");
+            Console.WriteLine("Enter field to be modified 1.firstName 2.lastName 3.Address 4.city 5.state 6.zip 7.phoneNumber 8.email 9.Delete a contact");
             int ch = Convert.ToInt32(Console.ReadLine());
             switch (ch)
             {
@@ -97,12 +101,17 @@ namespace Address_Book
                     string emails = Console.ReadLine();
                     ContactArray[i].email = emails;
                     break;
+                    //Delete a user
+                case 9:
+                    ContactArray = ContactArray.Take(i).Concat(ContactArray.Skip(i + 1)).ToArray();
+                    contact--;
+                    break;
             }
+            //Display Function
             ContactPerson obj = new ContactPerson();
             obj.Display(ContactArray, contact);
 
         }
-
 
     }
 
@@ -116,6 +125,7 @@ namespace Address_Book
             //Call Method
             addressBookSystem.CreateContact("Ash", "sat", "Chennai thirumulaivoyal", "chennai", "TN", 243001, 9842905050, "asmithasatesh");
             addressBookSystem.CreateContact("abcd", "lastabcd", "Chennai thirumulaivoyal", "chennai", "TN", 243001, 9842905050, "asmithasatesh@gmail.com");
+            addressBookSystem.CreateContact("As", "sat", "Chennai thirumulaivoyal", "chennai", "TN", 6000611, 9842905050, "asmithasatesh");
             addressBookSystem.Modify();
         }
         //Display Details
@@ -126,6 +136,7 @@ namespace Address_Book
             for (i = 0; i < N; i++)
             {
                 Console.WriteLine("First name: {0}\n Last name: {1}\n Address: {2}\n City: {3}\n Zip: {4}\n State: {5}\n Phone Number: {6}\n Email: {7} \n", ContactArray[i].firstName, ContactArray[i].lastName, ContactArray[i].Address, ContactArray[i].city, ContactArray[i].zip, ContactArray[i].state, ContactArray[i].phoneNumber, ContactArray[i].email);
+
             }
         }
     }
