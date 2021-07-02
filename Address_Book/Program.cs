@@ -44,6 +44,64 @@ namespace Address_Book
             ContactPerson obj = new ContactPerson();
             obj.Display(ContactArray, contact);
         }
+        public void Modify()
+        {
+            int i=0;
+            Console.WriteLine("---To Modify---\nEnter first name of user");
+            string name = Console.ReadLine();
+            while( this.ContactArray[i].firstName!= name)
+            {
+                i++;
+            }
+            Console.WriteLine("Enter field to be modified 1.firstName 2.lastName 3.Address 4.city 5.state 6.zip 7.phoneNumber 8.email");
+            int ch = Convert.ToInt32(Console.ReadLine());
+            switch (ch)
+            {
+                case 1:
+                    Console.WriteLine("Enter the modified value");
+                    string fn = Console.ReadLine();
+                    ContactArray[i].firstName = fn;
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the modified value");
+                    string ls = Console.ReadLine();
+                    ContactArray[i].lastName = ls;
+                    break;
+                case 3:
+                    Console.WriteLine("Ente the modified value");
+                    string add = Console.ReadLine();
+                    ContactArray[i].Address = add;
+                    break;
+                case 4:
+                    Console.WriteLine("Enter the modified value");
+                    string cities = Console.ReadLine();
+                    ContactArray[i].city = cities;
+                    break;
+                case 5:
+                    Console.WriteLine("Enter the modified value");
+                    string states = Console.ReadLine();
+                    ContactArray[i].state=states;
+                    break;
+                case 6:
+                    Console.WriteLine("Enter the modified value");
+                    int temp = Convert.ToInt32(Console.ReadLine());
+                    ContactArray[i].zip = temp;
+                    break;
+                case 7:
+                    Console.WriteLine("Ente the modified value");
+                    int phn = Convert.ToInt32(Console.ReadLine());
+                    ContactArray[i].phoneNumber = phn;
+                    break;
+                case 8:
+                    Console.WriteLine("Ente the modified value");
+                    string emails = Console.ReadLine();
+                    ContactArray[i].email = emails;
+                    break;
+            }
+            ContactPerson obj = new ContactPerson();
+            obj.Display(ContactArray, contact);
+
+        }
 
 
     }
@@ -58,7 +116,7 @@ namespace Address_Book
             //Call Method
             addressBookSystem.CreateContact("Ash", "sat", "Chennai thirumulaivoyal", "chennai", "TN", 243001, 9842905050, "asmithasatesh");
             addressBookSystem.CreateContact("abcd", "lastabcd", "Chennai thirumulaivoyal", "chennai", "TN", 243001, 9842905050, "asmithasatesh@gmail.com");
-
+            addressBookSystem.Modify();
         }
         //Display Details
         public void Display(AddressBookSystem[] ContactArray, int N)
