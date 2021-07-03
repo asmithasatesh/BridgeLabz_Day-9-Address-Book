@@ -177,7 +177,7 @@ namespace Address_Book
                 }
 
                 //Check if any modification needed
-                Console.WriteLine("Do you want to Modify?(Y/N");
+                Console.WriteLine("Do you want to Modify?(Y/N)");
                 char ch=Convert.ToChar(Console.ReadLine());
                 if (ch == 'Y')
                 {
@@ -189,7 +189,7 @@ namespace Address_Book
                 foreach (KeyValuePair<string, AddressBookSystem[]> kvp in numberNames)
                 {
                     //Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value[0].firstName);              
-                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value;
+                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
                 }
                 i++;
             }
