@@ -13,7 +13,7 @@ namespace Address_Book
             int num = Convert.ToInt32(Console.ReadLine());
 
             //Create dictionary to store addressbook
-            IDictionary<string, AddressBookSystem[]> numberNames = new Dictionary<string, AddressBookSystem[]>();
+            IDictionary<string, List<AddressBookSystem>> numberNames = new Dictionary<string, List<AddressBookSystem>>();
 
             //Runs till number of addressbook needs to be added
             while (0 < num)
@@ -68,16 +68,16 @@ namespace Address_Book
 
                 //Implements IDictionary<TKey, TValue> interface.
                 numberNames.Add(addrBookName, addressBookSystem.ContactArray);
-                foreach (KeyValuePair<string, AddressBookSystem[]> kvp in numberNames)
+                foreach (KeyValuePair<string,List < AddressBookSystem >> kvp in numberNames)
                 {
                     //Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value[0].firstName);              
-                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
+                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value+"\n");
                 }
                 num--; ;
             }
         }
         //Display Details
-        public void Display(AddressBookSystem[] ContactArray, int N)
+        public void Display(List<AddressBookSystem> ContactArray, int N)
         {
             Console.WriteLine("---------Address Book Contains---------");
             int i;
