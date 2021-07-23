@@ -4,8 +4,13 @@ using System.Linq;
 
 namespace Address_Book
 {
+
     public class AddressBookSystem
     {
+
+        public List<AddressBookSystem> stateList;
+        public List<AddressBookSystem> cityList;
+
         //instance variables 
         public string firstName;
         public string lastName;
@@ -15,7 +20,7 @@ namespace Address_Book
         public int zip;
         public long phoneNumber;
         public string email;
-        public AddressBookSystem[] ContactArray;
+        public List<AddressBookSystem> ContactArray;
         int contact = 0;
 
         //Parameterised Constructor
@@ -34,20 +39,97 @@ namespace Address_Book
         //Default Contructor
         public AddressBookSystem()
         {
-            this.ContactArray = new AddressBookSystem[10];
+            this.ContactArray = new List<AddressBookSystem>();
         }
 
         //To add Contact to Address Book
         public void CreateContact(string firstName, string lastName, string Address, string city, string state, int zip, long phoneNumber, string email)
         {
+            AddressBookSystem bookSystem ;
 
-            ContactArray[this.contact] = new AddressBookSystem(firstName, lastName, Address, city, state, zip, phoneNumber, email);
-            contact++;
-            ContactPerson obj = new ContactPerson();
-            obj.Display(ContactArray, contact);
+            //Newly add element to List
+            if (contact==0)
+            {
+                bookSystem = new AddressBookSystem(firstName, lastName, Address, city, state, zip, phoneNumber, email);
+                ContactArray.Add(bookSystem);
+                if (ContactPerson.State.ContainsKey(state))
+                {
+                    List<AddressBookSystem> existing = ContactPerson.State[state];
+                    existing.Add(bookSystem);
+
+                }
+                else
+                {
+                    stateList = new List<AddressBookSystem>();
+                    stateList.Add(bookSystem);
+                    ContactPerson.State.Add(state, stateList);
+
+                }
+                if (ContactPerson.City.ContainsKey(city))
+                {
+                    List<AddressBookSystem> existing = ContactPerson.City[city];
+                    existing.Add(bookSystem);
+
+                }
+                else
+                {
+                    cityList = new List<AddressBookSystem>();
+                    cityList.Add(bookSystem);
+                    ContactPerson.City.Add(city, cityList);
+
+                }
+                contact++;
+                ContactPerson obj = new ContactPerson();
+                obj.Display(ContactArray, contact);
+
+            }
+            else if (contact!=0)
+            {
+                //Check if element already present in List
+                AddressBookSystem addressBookSystems = ContactArray.Find(x => x.firstName.Equals(firstName));
+                if(addressBookSystems == null)
+                {
+                    bookSystem = new AddressBookSystem(firstName, lastName, Address, city, state, zip, phoneNumber, email);
+                    ContactArray.Add(bookSystem);
+                    if (ContactPerson.State.ContainsKey(state))
+                    {
+                        List<AddressBookSystem> existing = ContactPerson.State[state];
+                        existing.Add(bookSystem);
+
+                    }
+                    else
+                    {
+                        stateList = new List<AddressBookSystem>();
+                        stateList.Add(bookSystem);
+                        ContactPerson.State.Add(state, stateList);
+    
+                    }
+                    if (ContactPerson.City.ContainsKey(city))
+                    {
+                        List<AddressBookSystem> existing = ContactPerson.City[city];
+                        existing.Add(bookSystem);
+
+                    }
+                    else
+                    {
+                        cityList = new List<AddressBookSystem>();
+                        cityList.Add(bookSystem);
+                        ContactPerson.City.Add(city, cityList);
+
+                    }
+                    contact++;
+                    ContactPerson obj = new ContactPerson();
+                    obj.Display(ContactArray, contact);
+                }
+                else
+                {
+                    Console.WriteLine("This person already exists in your AddressBook!");
+                }
+
+            }
         }
         //Function call To modify
-        public void Modify()
+        public void Modify() 
         {
             //User enters field to Modify
             int i=0;
@@ -106,7 +188,7 @@ namespace Address_Book
                     break;
                     //Delete a user
                 case 9:
-                    ContactArray = ContactArray.Take(i).Concat(ContactArray.Skip(i + 1)).ToArray();
+                    ContactArray = ContactArray.Take(i).Concat(ContactArray.Skip(i + 1)).ToList();
                     contact--;
                     break;
                 default:

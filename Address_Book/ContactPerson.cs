@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Address_Book
 {
     class ContactPerson
     {
+        //
+        public static IDictionary<string, List<AddressBookSystem>> numberNames = new Dictionary<string, List<AddressBookSystem>>();
+        public static Dictionary<string, List<AddressBookSystem>> City = new Dictionary<string, List<AddressBookSystem>>();
+        public static Dictionary<string, List<AddressBookSystem>> State = new Dictionary<string, List<AddressBookSystem>>();
+
         static void Main(string[] args)
         {
             //Input an AddressBook name
@@ -13,7 +19,7 @@ namespace Address_Book
             int num = Convert.ToInt32(Console.ReadLine());
 
             //Create dictionary to store addressbook
-            IDictionary<string, AddressBookSystem[]> numberNames = new Dictionary<string, AddressBookSystem[]>();
+
 
             //Runs till number of addressbook needs to be added
             while (0 < num)
@@ -30,7 +36,7 @@ namespace Address_Book
                 //Input contacts values from user
                 while (contacts > 0)
                 {
-                    Console.WriteLine("Enter Firstname ");
+                    Console.WriteLine("\nEnter Firstname ");
                     string firstname = Console.ReadLine();
                     Console.WriteLine("Enter Lastname ");
                     string lastname = Console.ReadLine();
@@ -57,27 +63,28 @@ namespace Address_Book
                     addressBookSystem.CreateContact(firstname, lastname, address, city, state, pincode, phone, email);
                     contacts--;
                 }
-
                 //Check if any modification needed
                 Console.WriteLine("Do you want to Modify?(Y/N)");
                 char ch = Convert.ToChar(Console.ReadLine());
                 if (ch == 'Y')
                 {
+
                     addressBookSystem.Modify();
                 }
 
                 //Implements IDictionary<TKey, TValue> interface.
                 numberNames.Add(addrBookName, addressBookSystem.ContactArray);
-                foreach (KeyValuePair<string, AddressBookSystem[]> kvp in numberNames)
+                foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
                 {
                     //Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value[0].firstName);              
-                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
+                    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value + "\n");
                 }
                 num--; ;
             }
+            Search();
         }
         //Display Details
-        public void Display(AddressBookSystem[] ContactArray, int N)
+        public void Display(List<AddressBookSystem> ContactArray, int N)
         {
             Console.WriteLine("---------Address Book Contains---------");
             int i;
@@ -87,5 +94,112 @@ namespace Address_Book
 
             }
         }
+
+        //Search a person through city or state or View all city and state List
+        public static void Search()
+        {
+            Console.WriteLine("Enter 1-to Seach a person through a City");
+            Console.WriteLine("Enter 2-to Seach a person through a State");
+            Console.WriteLine("Enter 3-to view people  in City list or State list");
+            int option = Convert.ToInt32(Console.ReadLine());
+            switch (option)
+            {
+                case 1:
+
+                    SearchAddress(option);
+                    break;
+                case 2:
+                    SearchAddress(option);
+                    break;
+                case 3:
+                    DisplayCityorState();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Option!");
+                    break;
+            }
+        }
+        //Display City list or State list from Dictionary
+        public static void DisplayCityorState()
+        {
+            Console.WriteLine("Enter 1-to view City list\n Enter 2-to view State list");
+            int citystate = Convert.ToInt32(Console.ReadLine());
+            if(citystate==1)
+            {
+                foreach (var i in City)
+                {
+                    Console.WriteLine("Display List for City: {0}\n",i.Key);
+                    foreach (var j in i.Value)
+                    {
+                        Console.WriteLine("Found person \"{0} {1}\" , residing in City {2}", j.firstName, j.lastName, j.city);
+                    }
+                    //Count number of people in Particular city
+                    Console.WriteLine("Count of people in City is: {0}", i.Value.Count);
+
+                }
+            }
+            else
+            {
+                foreach (var i in State)
+                {
+                    Console.WriteLine("Display List for State: {0}\n", i.Key);
+                    foreach (var j in i.Value)
+                    {
+                        Console.WriteLine("Found person \"{0} {1}\" , residing in State {2}", j.firstName, j.lastName, j.state);
+                    }
+                    //Count number of people in Particular State
+                    Console.WriteLine("Count of people in State is: {0}", i.Value.Count);
+                }
+            }
+           
+        }
+        //Search a person through different Address Book based on City or State
+        public static void SearchAddress(int option)
+        {
+            string city = "", state = "";
+            if (option == 1)
+            {
+                Console.WriteLine("Enter the City Name");
+                city = Console.ReadLine();
+            }
+            if (option == 2)
+            {
+                Console.WriteLine("Enter the City Name");
+                state = Console.ReadLine();
+            }
+
+            //Iterate through all Address Book present in Dictionary
+            foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
+            {
+                if (option == 1)
+                {
+                    StoreCity(kvp.Key, kvp.Value, city);
+                }
+                if (option == 2)
+                {
+                    StoreState(kvp.Key, kvp.Value, state);
+                }
+
+            }
+        }
+        //Display Person names found in given City
+        public static void StoreCity(string key, List<AddressBookSystem> ContactArray, string city)
+        {
+            List<AddressBookSystem> CityList = ContactArray.FindAll(x => x.city.Equals(city)).ToList();
+            foreach (var i in CityList)
+            {
+                Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in City {2}", i.firstName, key, i.city);
+            }
+        }
+        //Display Person names found in given State
+        public static void StoreState(string key, List<AddressBookSystem> ContactArray, string state)
+        {
+            List<AddressBookSystem> StateList = ContactArray.FindAll(x => x.state.Equals(state)).ToList();
+            foreach (var i in StateList)
+            {
+                Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in State {2}", i.firstName, key, i.state);
+            }
+        }
+
     }
 }

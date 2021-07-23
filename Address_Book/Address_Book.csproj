@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CoreProgramming">
+      <HintPath>..\..\CoreProgramming\CoreProgramming\obj\Debug\netcoreapp3.1\CoreProgramming.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
