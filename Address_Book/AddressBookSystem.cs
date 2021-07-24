@@ -21,7 +21,7 @@ namespace Address_Book
         public long phoneNumber;
         public string email;
         public List<AddressBookSystem> ContactArray;
-        int contact = 0;
+        public int contact = 0;
 
         //Parameterised Constructor
         public AddressBookSystem(string firstName, string lastName, string Address, string city, string state, int zip, long phoneNumber, string email)
@@ -41,7 +41,10 @@ namespace Address_Book
         {
             this.ContactArray = new List<AddressBookSystem>();
         }
-
+        public override string ToString()
+        {
+            return "Name: " + this.firstName +" "+ this.lastName + " Address: " + this.Address + "  City: " + this.city + " State: " + this.state + " Pincode: " + this.zip + " Phone Number: " + this.phoneNumber + " Email Id: " + this.email;
+        }
         //To add Contact to Address Book
         public void CreateContact(string firstName, string lastName, string Address, string city, string state, int zip, long phoneNumber, string email)
         {

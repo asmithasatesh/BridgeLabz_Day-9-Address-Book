@@ -7,7 +7,7 @@ namespace Address_Book
 {
     class ContactPerson
     {
-        //
+
         public static IDictionary<string, List<AddressBookSystem>> numberNames = new Dictionary<string, List<AddressBookSystem>>();
         public static Dictionary<string, List<AddressBookSystem>> City = new Dictionary<string, List<AddressBookSystem>>();
         public static Dictionary<string, List<AddressBookSystem>> State = new Dictionary<string, List<AddressBookSystem>>();
@@ -72,15 +72,16 @@ namespace Address_Book
                     addressBookSystem.Modify();
                 }
 
-                //Implements IDictionary<TKey, TValue> interface.
                 numberNames.Add(addrBookName, addressBookSystem.ContactArray);
                 foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
                 {
                     //Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value[0].firstName);              
                     Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value + "\n");
                 }
-                num--; ;
+                num--;
+
             }
+
             Search();
         }
         //Display Details
@@ -95,12 +96,36 @@ namespace Address_Book
             }
         }
 
+        //Sort using SortedList collection classes
+        public static  void SortContactPerson()
+        {
+
+            SortedList<string, AddressBookSystem> sorted;
+            foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
+            {
+                Console.WriteLine("********Displaying sorted Contact Person Details in address book: {0}********", kvp.Key);
+                sorted = new SortedList<string, AddressBookSystem>();
+                foreach (var member in kvp.Value)
+                {
+                    sorted.Add(member.firstName, member);
+                }
+                foreach (var member in sorted)
+                {
+                   Console.WriteLine(member.Value.ToString());
+
+                }
+
+            }
+
+        }
+
         //Search a person through city or state or View all city and state List
         public static void Search()
         {
             Console.WriteLine("Enter 1-to Seach a person through a City");
             Console.WriteLine("Enter 2-to Seach a person through a State");
             Console.WriteLine("Enter 3-to view people  in City list or State list");
+            Console.WriteLine("Enter 4-to Sort Contact people in Address Book");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -113,6 +138,9 @@ namespace Address_Book
                     break;
                 case 3:
                     DisplayCityorState();
+                    break;
+                case 4:
+                    SortContactPerson();
                     break;
                 default:
                     Console.WriteLine("Invalid Option!");
