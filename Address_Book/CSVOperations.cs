@@ -6,15 +6,17 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Address_Book
 {
     class CSVOperations
     {
-        public static void CSVOperation(Dictionary<string, List<AddressBookSystem>> addressbooknames)
+        public static void CSVOperation(Dictionary<string, List<AddressBookSystem>> addressbooknames,int option)
         {
             //Store Csv File path in a string
             string csvFilePath = @"D:\Random Programs\Address_Book\Address_Book\CsvFile.csv";
+            string jsonfilePath = @"D:\Random Programs\Address_Book\Address_Book\JsonFile.json";
             File.WriteAllText(csvFilePath, string.Empty);
             //Iterate over Dictionary Values
             foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in addressbooknames)
@@ -35,26 +37,57 @@ namespace Address_Book
                 //Print a newline
                 csvWriter.NextRecord();
             }
+
             //Reading a Csv File
             using (var reader = new StreamReader(csvFilePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 //Get all records from Csv File
                 var records = csv.GetRecords<AddressBookSystem>().ToList();
-
-                foreach (AddressBookSystem member in records)
+                if(option==1)
                 {
-                    //To skip Headers in Csv File
-                    if(member.firstName=="firstName")
+                    foreach (AddressBookSystem member in records)
                     {
-                        Console.WriteLine("\n");
-                        continue;
+                        //To skip Headers in Csv File
+                        if (member.firstName == "firstName")
+                        {
+                            Console.WriteLine("\n");
+                            continue;
+                        }
+                        //Convert each Value to string and Print to Console
+                        Console.WriteLine(member.ToString());
                     }
-                    //Convert each Value to string and Print to Console
-                    Console.WriteLine(member.ToString());
                 }
+                else
+                {
+                    //Create object for Json
+                    JsonSerializer jsonSerializer = new JsonSerializer();
+                    using (StreamWriter stream = new StreamWriter(jsonfilePath))
+                    using (JsonWriter jsonWriter = new JsonTextWriter(stream))
+                    {
+                        //Converting from List to Json Object
+                        jsonSerializer.Serialize(jsonWriter, records);
+                    }
+
+                    //Reading from Json File-> Converting from Json Object to List
+                    List<AddressBookSystem> jsonList = JsonConvert.DeserializeObject<List<AddressBookSystem>>(File.ReadAllText(jsonfilePath));
+                    foreach(var i in jsonList)
+                    {
+                        //To remove header in Json file
+                        if(i.firstName=="firstName")
+                        {
+                            Console.WriteLine("\n");
+                            continue;
+                        }
+                        Console.WriteLine(i.ToString());
+                    }
+                }
+               
 
             }
+
+
+            
         }
     }
 }
