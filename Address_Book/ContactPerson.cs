@@ -147,6 +147,8 @@ namespace Address_Book
             Console.WriteLine("Enter 2-to Seach a person through a State");
             Console.WriteLine("Enter 3-to view people  in City list or State list");
             Console.WriteLine("Enter 4-to Sort Contact people in Address Book");
+            Console.WriteLine("Enter 5-To Write AddressBook in File");
+            Console.WriteLine("Enter 6-To Read a File");
 
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
@@ -162,6 +164,12 @@ namespace Address_Book
                     break;
                 case 4:
                     SortContactPerson();
+                    break;
+                case 5:
+                    FileOperations.GetDictionary(numberNames);
+                    break;
+                case 6:
+                    FileOperations.ReadAddressBook();
                     break;
 
                 default:
