@@ -1,0 +1,7 @@
+Address Book: Ashs Book
+Name: Pramela Satesh	Address: Bareilly	City: Bareilly 	 State: UP	Pincode: 243001 	 Phone Number: 9962205050	Email Id: pramela@gmail.com
+Name: Shirish Satesh	Address: Chennai	City: Chennai 	 State: Tamil Nadu	Pincode: 623111 	 Phone Number: 9715605050	Email Id: Ashwin@gmail.com
+
+Address Book: Pramelas Book
+Name: Satesh Krishnan	Address: Erode	City: Erode 	 State: Tamil Nadu	Pincode: 876433 	 Phone Number: 9840206050	Email Id: satesh@gmail.com
+

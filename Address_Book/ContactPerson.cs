@@ -7,8 +7,8 @@ namespace Address_Book
 {
     class ContactPerson
     {
-        //
-        public static IDictionary<string, List<AddressBookSystem>> numberNames = new Dictionary<string, List<AddressBookSystem>>();
+
+        public static Dictionary<string, List<AddressBookSystem>> numberNames = new Dictionary<string, List<AddressBookSystem>>();
         public static Dictionary<string, List<AddressBookSystem>> City = new Dictionary<string, List<AddressBookSystem>>();
         public static Dictionary<string, List<AddressBookSystem>> State = new Dictionary<string, List<AddressBookSystem>>();
 
@@ -17,9 +17,6 @@ namespace Address_Book
             //Input an AddressBook name
             Console.WriteLine("Enter number of AddressBook to create");
             int num = Convert.ToInt32(Console.ReadLine());
-
-            //Create dictionary to store addressbook
-
 
             //Runs till number of addressbook needs to be added
             while (0 < num)
@@ -51,10 +48,10 @@ namespace Address_Book
                     string state = Console.ReadLine();
 
                     Console.WriteLine("Enter pincode");
-                    int pincode = Convert.ToInt32(Console.ReadLine());
+                    string pincode = Console.ReadLine();
 
                     Console.WriteLine("Enter PhoneNumber ");
-                    long phone = Convert.ToInt64(Console.ReadLine());
+                    string phone = Console.ReadLine();
 
                     Console.WriteLine("Enter Email");
                     string email = Console.ReadLine();
@@ -72,15 +69,16 @@ namespace Address_Book
                     addressBookSystem.Modify();
                 }
 
-                //Implements IDictionary<TKey, TValue> interface.
                 numberNames.Add(addrBookName, addressBookSystem.ContactArray);
                 foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
                 {
                     //Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value[0].firstName);              
                     Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value + "\n");
                 }
-                num--; ;
+                num--;
+
             }
+
             Search();
         }
         //Display Details
@@ -95,17 +93,67 @@ namespace Address_Book
             }
         }
 
+        //Sort using SortedList collection classes
+        public static void SortContactPerson()
+        {
+
+            Console.WriteLine("Enter 1-to Sort contact based on First Name");
+            Console.WriteLine("Enter 2-to Sort Contact Based on State");
+            Console.WriteLine("Enter 3-to Sort Contact based on City");
+            Console.WriteLine("Enter 4-to Sort Contact based on zip");
+            int option = Convert.ToInt32(Console.ReadLine());
+            foreach (KeyValuePair<string, List<AddressBookSystem>> kvp in numberNames)
+            {
+                Console.WriteLine("********Displaying sorted Contact Person Details in address book: {0}********", kvp.Key);
+                //Store value of Dictionary in a list
+                List<AddressBookSystem> listAddressBook=kvp.Value;
+                //Create object for Class that implements IComparer<AddressBookSystem>  
+                ContactPersonComparer contactPersonComparer = new ContactPersonComparer();
+                switch (option)
+                {
+                    case 1:
+                        //Set field based on the switch case Option
+                        contactPersonComparer.compareByFields = ContactPersonComparer.sortBy.firstName;
+                        //Call Sort Method
+                        listAddressBook.Sort(contactPersonComparer);
+                        break;
+                    case 2:
+                        contactPersonComparer.compareByFields = ContactPersonComparer.sortBy.state;
+                        listAddressBook.Sort(contactPersonComparer);
+                        break;
+                    case 3:
+                        contactPersonComparer.compareByFields = ContactPersonComparer.sortBy.city;
+                        listAddressBook.Sort(contactPersonComparer);
+                        break;
+                    case 4:
+                        contactPersonComparer.compareByFields = ContactPersonComparer.sortBy.zip;
+                        listAddressBook.Sort(contactPersonComparer);
+                        break;
+                }
+
+                foreach (var emp in listAddressBook)
+                {
+                    Console.WriteLine(emp.ToString());
+                }
+                   
+            }
+
+        }
+
         //Search a person through city or state or View all city and state List
         public static void Search()
         {
             Console.WriteLine("Enter 1-to Seach a person through a City");
             Console.WriteLine("Enter 2-to Seach a person through a State");
             Console.WriteLine("Enter 3-to view people  in City list or State list");
+            Console.WriteLine("Enter 4-to Sort Contact people in Address Book");
+            Console.WriteLine("Enter 5-To Write AddressBook in File");
+            Console.WriteLine("Enter 6-To Read a File");
+
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
                 case 1:
-
                     SearchAddress(option);
                     break;
                 case 2:
@@ -114,6 +162,16 @@ namespace Address_Book
                 case 3:
                     DisplayCityorState();
                     break;
+                case 4:
+                    SortContactPerson();
+                    break;
+                case 5:
+                    FileOperations.GetDictionary(numberNames);
+                    break;
+                case 6:
+                    FileOperations.ReadAddressBook();
+                    break;
+
                 default:
                     Console.WriteLine("Invalid Option!");
                     break;
