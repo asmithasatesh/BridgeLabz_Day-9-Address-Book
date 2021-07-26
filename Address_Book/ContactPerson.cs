@@ -22,38 +22,38 @@ namespace Address_Book
             while (0 < num)
             {
                 //Get input
-                Console.WriteLine("Enter name of addressBook");
+                Console.WriteLine("Enter name of addressBook:");
                 string addrBookName = Console.ReadLine();
 
                 //Create object for Class
                 AddressBookSystem addressBookSystem = new AddressBookSystem();
-                Console.WriteLine("Enter number of Contacts to Add");
+                Console.WriteLine("Enter number of Contacts to Add:");
                 int contacts = Convert.ToInt32(Console.ReadLine());
 
                 //Input contacts values from user
                 while (contacts > 0)
                 {
-                    Console.WriteLine("\nEnter Firstname ");
+                    Console.WriteLine("\nEnter Firstname: ");
                     string firstname = Console.ReadLine();
-                    Console.WriteLine("Enter Lastname ");
+                    Console.WriteLine("Enter Lastname: ");
                     string lastname = Console.ReadLine();
 
-                    Console.WriteLine("Enter Address");
+                    Console.WriteLine("Enter Address:");
                     string address = Console.ReadLine();
 
-                    Console.WriteLine("Enter City");
+                    Console.WriteLine("Enter City:");
                     string city = Console.ReadLine();
 
-                    Console.WriteLine("Enter State");
+                    Console.WriteLine("Enter State:");
                     string state = Console.ReadLine();
 
-                    Console.WriteLine("Enter pincode");
+                    Console.WriteLine("Enter pincode:");
                     string pincode = Console.ReadLine();
 
-                    Console.WriteLine("Enter PhoneNumber ");
+                    Console.WriteLine("Enter PhoneNumber: ");
                     string phone = Console.ReadLine();
 
-                    Console.WriteLine("Enter Email");
+                    Console.WriteLine("Enter Email:");
                     string email = Console.ReadLine();
 
                     //Call Method
