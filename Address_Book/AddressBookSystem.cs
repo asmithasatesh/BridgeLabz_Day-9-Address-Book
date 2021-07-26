@@ -8,8 +8,8 @@ namespace Address_Book
     public class AddressBookSystem
     {
 
-        public List<AddressBookSystem> stateList;
-        public List<AddressBookSystem> cityList;
+        public List<AddressBookSystem> stateList { get; set; }
+        public List<AddressBookSystem> cityList { get; set; }
 
         //instance variables 
         public string firstName { get; set; }
@@ -20,22 +20,8 @@ namespace Address_Book
         public string zip { get; set; }
         public string phoneNumber { get; set; }
         public string email { get; set; }
-        public List<AddressBookSystem> ContactArray;
-        public int contact = 0;
+        public List<AddressBookSystem> ContactArray { get; set; }
 
-        //Parameterised Constructor
-        public AddressBookSystem(string firstName, string lastName, string Address, string city, string state, string zip, string phoneNumber, string email)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.Address = Address;
-            this.city = city;
-            this.state = state;
-            this.zip = zip;
-            this.phoneNumber = phoneNumber;
-            this.email = email;
-
-        }
         //Default Contructor
         public AddressBookSystem()
         {
@@ -43,17 +29,26 @@ namespace Address_Book
         }
         public override string ToString()
         {
-            return ("Name: " + this.firstName +" "+ this.lastName + "\tAddress: " +this.Address+"\tCity: " +this.city+" \t State: "+this.state+"\tPincode: " +this.zip+" \t Phone Number: "+this.phoneNumber+"\tEmail Id: "+this.email);
+            return ("Name: " + this.firstName +" "+ this.lastName + " \t Address: " +this.Address+" \t City: " +this.city+" \t State: "+this.state+" \t Pincode: " +this.zip+" \t Phone Number: "+this.phoneNumber+" \t Email Id: "+this.email);
         }
         //To add Contact to Address Book
         public void CreateContact(string firstName, string lastName, string Address, string city, string state, string zip, string phoneNumber, string email)
         {
-            AddressBookSystem bookSystem ;
+            AddressBookSystem bookSystem=new AddressBookSystem() ;
+            bookSystem.firstName = firstName;
+            bookSystem.lastName = lastName;
+            bookSystem.Address = Address;
+            bookSystem.city = city;
+            bookSystem.state = state;
+            bookSystem.zip = zip;
+            bookSystem.phoneNumber = phoneNumber;
+            bookSystem.email = email;
+
 
             //Newly add element to List
-            if (contact==0)
+            if (ContactArray.Count== 0)
             {
-                bookSystem = new AddressBookSystem(firstName, lastName, Address, city, state, zip, phoneNumber, email);
+                
                 ContactArray.Add(bookSystem);
                 if (ContactPerson.State.ContainsKey(state))
                 {
@@ -81,18 +76,18 @@ namespace Address_Book
                     ContactPerson.City.Add(city, cityList);
 
                 }
-                contact++;
+
                 ContactPerson obj = new ContactPerson();
-                obj.Display(ContactArray, contact);
+                obj.Display(ContactArray, ContactArray.Count);
 
             }
-            else if (contact!=0)
+            else if (ContactArray.Count != 0)
             {
                 //Check if element already present in List
                 AddressBookSystem addressBookSystems = ContactArray.Find(x => x.firstName.Equals(firstName));
                 if(addressBookSystems == null)
                 {
-                    bookSystem = new AddressBookSystem(firstName, lastName, Address, city, state, zip, phoneNumber, email);
+
                     ContactArray.Add(bookSystem);
                     if (ContactPerson.State.ContainsKey(state))
                     {
@@ -120,9 +115,9 @@ namespace Address_Book
                         ContactPerson.City.Add(city, cityList);
 
                     }
-                    contact++;
+
                     ContactPerson obj = new ContactPerson();
-                    obj.Display(ContactArray, contact);
+                    obj.Display(ContactArray, ContactArray.Count);
                 }
                 else
                 {
@@ -192,7 +187,6 @@ namespace Address_Book
                     //Delete a user
                 case 9:
                     ContactArray = ContactArray.Take(i).Concat(ContactArray.Skip(i + 1)).ToList();
-                    contact--;
                     break;
                 default:
                     Console.WriteLine("Invalid Option");
@@ -200,7 +194,7 @@ namespace Address_Book
             }
             //Display Function
             ContactPerson obj = new ContactPerson();
-            obj.Display(ContactArray, contact);
+            obj.Display(ContactArray, ContactArray.Count);
         }
     }
 }

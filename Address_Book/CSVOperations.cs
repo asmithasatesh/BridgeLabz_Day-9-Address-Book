@@ -66,28 +66,23 @@ namespace Address_Book
                     using (JsonWriter jsonWriter = new JsonTextWriter(stream))
                     {
                         //Converting from List to Json Object
-                        jsonSerializer.Serialize(jsonWriter, records);
+                        jsonSerializer.Serialize(jsonWriter, addressbooknames);
                     }
 
                     //Reading from Json File-> Converting from Json Object to List
-                    List<AddressBookSystem> jsonList = JsonConvert.DeserializeObject<List<AddressBookSystem>>(File.ReadAllText(jsonfilePath));
-                    foreach(var i in jsonList)
+                    Dictionary<string, List<AddressBookSystem>> jsonList = JsonConvert.DeserializeObject<Dictionary<string, List<AddressBookSystem>>>(File.ReadAllText(jsonfilePath));
+                    foreach (KeyValuePair<string, List<AddressBookSystem>> i in jsonList)
                     {
-                        //To remove header in Json file
-                        if(i.firstName=="firstName")
+                        Console.WriteLine("\nAddressBook Name: {0}",i.Key);
+                        foreach (var j in i.Value)
                         {
-                            Console.WriteLine("\n");
-                            continue;
+                            Console.WriteLine(j.ToString());
                         }
-                        Console.WriteLine(i.ToString());
+
+
                     }
                 }
-               
-
-            }
-
-
-            
+            }            
         }
     }
 }
