@@ -57,7 +57,7 @@ namespace Address_Book
                     string email = Console.ReadLine();
 
                     //Call Method
-                    addressBookSystem.CreateContact(firstname, lastname, address, city, state, pincode, phone, email);
+                    addressBookSystem.CreateContact(addrBookName, firstname, lastname, address, city, state, pincode, phone, email);
                     contacts--;
                 }
                 //Check if any modification needed

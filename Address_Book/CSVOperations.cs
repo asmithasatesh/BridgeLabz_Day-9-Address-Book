@@ -25,15 +25,10 @@ namespace Address_Book
                 using var stream = File.Open(csvFilePath, FileMode.Append);
                 using var writer = new StreamWriter(stream);
                 using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                //Iterate over each value
-                foreach (var value in kvp.Value)
-                {
-                    //Create List to add Records
-                    List<AddressBookSystem> list = new List<AddressBookSystem>();
-                    list.Add(value);
-                    //Write List to CSV File
-                    csvWriter.WriteRecords(list);
-                }
+
+                List<AddressBookSystem> addList=new List<AddressBookSystem>();
+                csvWriter.WriteRecords(kvp.Value);
+
                 //Print a newline
                 csvWriter.NextRecord();
             }
@@ -46,8 +41,10 @@ namespace Address_Book
                 var records = csv.GetRecords<AddressBookSystem>().ToList();
                 if(option==1)
                 {
+                    string addressBookName = " ";
                     foreach (AddressBookSystem member in records)
                     {
+
                         //To skip Headers in Csv File
                         if (member.firstName == "firstName")
                         {
@@ -55,6 +52,12 @@ namespace Address_Book
                             continue;
                         }
                         //Convert each Value to string and Print to Console
+                        if(addressBookName!=member.key)
+                        {
+                            Console.WriteLine("AddressBook Name: " + member.key);
+                            addressBookName = member.key;
+                        }
+
                         Console.WriteLine(member.ToString());
                     }
                 }
