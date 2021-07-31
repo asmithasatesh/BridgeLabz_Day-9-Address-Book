@@ -20,6 +20,7 @@ namespace Address_Book
         public string zip { get; set; }
         public string phoneNumber { get; set; }
         public string email { get; set; }
+        public string key { get; set; }
         public List<AddressBookSystem> ContactArray { get; set; }
 
         //Default Contructor
@@ -32,7 +33,7 @@ namespace Address_Book
             return ("Name: " + this.firstName +" "+ this.lastName + " \t Address: " +this.Address+" \t City: " +this.city+" \t State: "+this.state+" \t Pincode: " +this.zip+" \t Phone Number: "+this.phoneNumber+" \t Email Id: "+this.email);
         }
         //To add Contact to Address Book
-        public void CreateContact(string firstName, string lastName, string Address, string city, string state, string zip, string phoneNumber, string email)
+        public void CreateContact(string addrBookName,string firstName, string lastName, string Address, string city, string state, string zip, string phoneNumber, string email)
         {
             AddressBookSystem bookSystem=new AddressBookSystem() ;
             bookSystem.firstName = firstName;
@@ -43,6 +44,7 @@ namespace Address_Book
             bookSystem.zip = zip;
             bookSystem.phoneNumber = phoneNumber;
             bookSystem.email = email;
+            bookSystem.key = addrBookName;
 
 
             //Newly add element to List
